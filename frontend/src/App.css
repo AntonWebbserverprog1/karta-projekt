@@ -1,0 +1,1592 @@
+:root { 
+  --bg: #050508; 
+  --panel: #0d0d14; 
+  --accent: #00f2ff; 
+  --portal: #a855f7; 
+  --lore: #eab308; 
+  --border: rgba(255,255,255,0.08); 
+  --danger: #ff3355;
+  --success: #22c55e;
+  --system-tool: #10b981;
+  --system-bg: rgba(16, 185, 129, 0.05);
+}
+
+body { 
+  margin: 0; 
+  background: var(--bg); 
+  color: #fff; 
+  font-family: 'Inter', -apple-system, sans-serif; 
+  overflow: hidden; 
+}
+
+.app-container { 
+  display: flex; 
+  height: 100vh; 
+  width: 100vw;
+}
+
+/* --- SIDEBAR & LOGO --- */
+.sidebar { 
+  width: 300px; 
+  background: var(--panel); 
+  border-right: 1px solid var(--border); 
+  display: flex; 
+  flex-direction: column; 
+  z-index: 100; 
+}
+
+.sidebar-header { 
+  padding: 25px 20px; 
+  border-bottom: 1px solid var(--border); 
+}
+
+.app-logo { 
+  display: flex; 
+  align-items: center; 
+  gap: 12px; 
+}
+
+.logo-icon { 
+  width: 24px; 
+  height: 24px; 
+  border: 2px solid var(--accent); 
+  transform: rotate(45deg); 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+}
+
+.logo-inner { 
+  width: 8px; 
+  height: 8px; 
+  background: var(--accent); 
+  box-shadow: 0 0 8px var(--accent); 
+}
+
+.logo-text { 
+  display: flex; 
+  flex-direction: column; 
+  line-height: 1; 
+}
+
+.logo-main { 
+  font-weight: 900; 
+  font-size: 1.1rem; 
+  letter-spacing: 2px; 
+}
+
+.logo-sub { 
+  font-size: 0.55rem; 
+  color: var(--accent); 
+  letter-spacing: 2px; 
+  margin-top: 3px; 
+}
+
+.sidebar-scrollable { 
+  flex: 1; 
+  overflow-y: auto; 
+  padding-bottom: 40px;
+}
+
+/* --- SEARCH --- */
+.search-container { 
+  padding: 15px; 
+  position: relative; 
+}
+
+.search-results { 
+  position: absolute; 
+  background: #111; 
+  border: 1px solid var(--accent); 
+  width: calc(100% - 30px); 
+  z-index: 110; 
+  max-height: 200px; 
+  overflow-y: auto; 
+  box-shadow: 0 10px 20px rgba(0,0,0,0.5); 
+}
+
+.search-results div { 
+  padding: 10px; 
+  cursor: pointer; 
+  border-bottom: 1px solid #222; 
+  font-size: 0.8rem; 
+}
+
+.search-results div:hover {
+  background: rgba(0, 242, 255, 0.1);
+}
+
+/* --- CATEGORIES & NAVIGATION --- */
+.sidebar-section {
+  margin-top: 20px;
+}
+
+.section-label { 
+  padding: 0 20px; 
+  font-size: 0.65rem; 
+  color: #444; 
+  letter-spacing: 2px; 
+  margin-bottom: 10px; 
+}
+
+.category-group {
+  margin: 5px 0;
+}
+
+.category-header {
+  padding: 8px 15px;
+  background: rgba(255, 255, 255, 0.03);
+  cursor: pointer;
+  font-size: 0.7rem;
+  color: var(--accent);
+  letter-spacing: 1px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  border-radius: 4px;
+  margin: 0 10px;
+  transition: 0.2s;
+}
+
+.category-header:hover { 
+  background: rgba(0, 242, 255, 0.1); 
+}
+
+.category-content {
+  padding-left: 10px;
+  margin-left: 20px;
+  border-left: 1px solid var(--border);
+  margin-top: 5px;
+}
+
+.nav-item { 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  padding: 8px 20px; 
+  cursor: pointer; 
+  font-size: 0.85rem; 
+  transition: 0.2s; 
+  color: #888; 
+}
+
+.nav-text { 
+  flex: 1; 
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis; 
+}
+
+.nav-item:hover { 
+  color: #fff; 
+  background: rgba(255,255,255,0.02); 
+}
+
+.nav-item.active { 
+  background: rgba(0, 242, 255, 0.05); 
+  border-left: 3px solid var(--accent); 
+  color: var(--accent); 
+}
+
+/* --- MOVE & DELETE BUTTONS --- */
+.cat-move-select {
+  background: #000;
+  color: #555;
+  border: 1px solid #222;
+  font-size: 0.55rem;
+  max-width: 70px;
+  margin-right: 8px;
+  opacity: 0;
+  transition: 0.2s;
+  cursor: pointer;
+}
+
+.nav-item:hover .cat-move-select { 
+  opacity: 1; 
+}
+
+.delete-small { 
+  background: transparent; 
+  border: none; 
+  color: #444; 
+  cursor: pointer; 
+  padding: 5px; 
+  opacity: 0; 
+  transition: 0.2s; 
+}
+
+.nav-item:hover .delete-small { 
+  opacity: 1; 
+}
+
+.delete-small:hover { 
+  color: var(--danger); 
+  transform: scale(1.2); 
+}
+
+.add-cat-btn {
+  display: block;
+  background: transparent;
+  width: calc(100%-20px);
+  border: 1px dashed #333;
+  color: #555;
+  font-size: 0.6rem;
+  padding: 5px;
+  margin: 10px auto;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.add-cat-btn:hover { 
+  border-color: var(--accent); 
+  color: var(--accent); 
+}
+
+.add-btn {
+  margin: 15px 20px;
+  background: rgba(234, 179, 8, 0.05);
+  border: 1px solid rgba(234, 179, 8, 0.2);
+  color: var(--lore);
+  padding: 10px;
+  cursor: pointer;
+  width: calc(100% - 40px);
+  font-weight: 800;
+  font-size: 0.7rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.add-btn:hover { 
+  background: var(--lore); 
+  color: #000; 
+}
+
+/* --- VIEWPORT & MAP --- */
+.viewport { 
+  flex: 1; 
+  position: relative; 
+  background: #000; 
+  overflow: hidden; 
+}
+
+.map-canvas { 
+  position: relative; 
+  display: inline-block; 
+  cursor: grab; 
+}
+
+.map-canvas:active { 
+  cursor: grabbing; 
+}
+
+.main-image { 
+  display: block; 
+  user-select: none; 
+  pointer-events: none; 
+}
+
+.marker { 
+  position: absolute; 
+  transform: translate(-50%, -50%); 
+  z-index: 50; 
+  cursor: pointer; 
+}
+
+.marker-icon { 
+  width: 30px; 
+  height: 30px; 
+  background: #000; 
+  border: 2px solid var(--accent); 
+  border-radius: 50%; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  box-shadow: 0 0 10px rgba(0,0,0,0.5); 
+}
+
+.marker.type-portal .marker-icon { border-color: var(--portal); }
+.marker.type-lore .marker-icon { border-color: var(--lore); }
+
+.marker-label { 
+  display: block; 
+  font-size: 0.7rem; 
+  background: rgba(0,0,0,0.8); 
+  padding: 2px 6px; 
+  margin-top: 5px; 
+  border-radius: 4px; 
+  white-space: nowrap; 
+}
+
+/* --- LORE VIEW & EDITING --- */
+.lore-view { 
+  position: absolute; 
+  inset: 0; 
+  background: var(--bg); 
+  padding: 50px; 
+  z-index: 200; 
+  overflow-y: auto; 
+}
+
+.lore-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 20px;
+}
+
+.header-left { display: flex; align-items: center; gap: 20px; flex: 1; }
+
+.back-btn {
+  background: #222;
+  border: none;
+  color: #fff;
+  padding: 8px 15px;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.edit-btn {
+  background: transparent;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  padding: 8px 16px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.75rem;
+  margin-left: 10px;
+}
+
+.edit-btn.save { border-color: var(--success); color: var(--success); }
+.edit-btn.cancel { border-color: #666; color: #666; }
+
+.edit-title-input {
+  background: #000;
+  border: 1px solid var(--accent);
+  color: #fff;
+  font-size: 2rem;
+  font-weight: bold;
+  padding: 5px 10px;
+  width: 100%;
+}
+
+.edit-content-textarea {
+  width: 100%;
+  height: 60vh;
+  background: #000;
+  border: 1px solid var(--border);
+  color: #ccc;
+  font-family: inherit;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  padding: 20px;
+  resize: vertical;
+}
+
+.lore-img { 
+  width: 100%; 
+  max-height: 400px; 
+  object-fit: cover; 
+  margin-bottom: 25px; 
+}
+
+.lore-text { 
+  font-size: 1.1rem; 
+  line-height: 1.7; 
+  color: #ccc; 
+  max-width: 800px;
+}
+
+.wiki-link { 
+  color: var(--accent); 
+  text-decoration: underline; 
+  cursor: pointer; 
+}
+
+/* --- FORMS & MODALS --- */
+.sidebar-input { 
+  width: 100%; 
+  padding: 10px; 
+  margin-bottom: 10px; 
+  background: #000; 
+  border: 1px solid var(--border); 
+  color: #fff; 
+  box-sizing: border-box;
+}
+
+.mini-upload-form { 
+  padding: 12px; 
+  margin: 10px 15px; 
+  background: rgba(255,255,255,0.02); 
+  border: 1px solid var(--border); 
+  display: flex; 
+  flex-direction: column; 
+  gap: 6px; 
+}
+
+.mini-upload-form input { 
+  background: #000; 
+  border: 1px solid #333; 
+  color: #fff; 
+  font-size: 0.75rem; 
+  padding: 5px; 
+}
+
+.mini-upload-form button { 
+  background: #333; 
+  color: #fff; 
+  border: none; 
+  cursor: pointer; 
+  padding: 6px; 
+}
+
+.glass-modal { 
+  position: fixed; 
+  inset: 0; 
+  background: rgba(0,0,0,0.85); 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  z-index: 1000; 
+  backdrop-filter: blur(4px); 
+}
+
+.modal-content { 
+  background: var(--panel); 
+  padding: 30px; 
+  border: 1px solid var(--accent); 
+  width: 400px; 
+}
+
+.action-btn { 
+  width: 100%; 
+  padding: 12px; 
+  cursor: pointer; 
+  border: 1px solid var(--border); 
+  background: transparent; 
+  color: white; 
+  font-weight: bold; 
+  margin-top: 5px; 
+}
+
+.action-btn.primary { border-color: var(--accent); color: var(--accent); }
+.action-btn.danger { border-color: var(--danger); color: var(--danger); }
+
+/* --- INSPECTOR --- */
+.inspector { 
+  width: 300px; 
+  background: var(--panel); 
+  border-left: 1px solid var(--border); 
+  position: absolute; 
+  right: -300px; 
+  height: 100%; 
+  transition: 0.3s ease; 
+  z-index: 150; 
+}
+
+.inspector.open { right: 0; position: relative; }
+.inspector-content { padding: 30px; }
+.close-inspector { background: none; border: none; color: #555; font-size: 1.5rem; cursor: pointer; float: right; }
+.type-tag { font-size: 0.6rem; color: var(--accent); letter-spacing: 1px; margin-top: 10px; }
+
+.data-actions-container {
+  display: flex;
+  gap: 10px;
+  padding: 10px 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.data-btn {
+  flex: 1;
+  background: rgba(0, 242, 255, 0.05);
+  border: 1px solid rgba(0, 242, 255, 0.2);
+  color: var(--accent);
+  padding: 8px 5px;
+  cursor: pointer;
+  font-size: 0.65rem;
+  font-weight: bold;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: 0.2s;
+}
+
+.data-btn:hover {
+  background: var(--accent);
+  color: #000;
+}
+
+.sidebar-data-panel {
+  margin: 10px 20px 40px; /* Mer marginal i botten så det går att scrolla */
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 15px;
+  border-top: 1px dashed var(--border);
+}
+
+.data-actions-row {
+  display: flex;
+  gap: 8px;
+}
+
+.data-btn {
+  flex: 1;
+  background: rgba(0, 242, 255, 0.05);
+  border: 1px solid rgba(0, 242, 255, 0.2);
+  color: var(--accent);
+  padding: 8px;
+  cursor: pointer;
+  font-size: 0.65rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.data-btn:hover {
+  background: var(--system-tool);
+  color: #050508;
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
+}
+
+.data-btn.danger-outline {
+  background: rgba(255, 51, 85, 0.05);
+  border-color: rgba(255, 51, 85, 0.2);
+  color: var(--danger);
+}
+
+.data-btn.danger-outline:hover {
+  background: var(--danger);
+  color: #fff;
+}
+
+/* --- CATEGORY SYSTEM --- */
+
+.sidebar-section {
+  margin-bottom: 25px;
+}
+
+.section-label {
+  color: #00ffcc;
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+  padding-left: 5px;
+  border-left: 2px solid #00ffcc;
+  text-transform: uppercase;
+}
+
+/* Gruppering av objekt + dess flytt-meny */
+.nav-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.nav-group:hover {
+  background: rgba(255, 255, 255, 0.07);
+}
+
+/* Dropdown för att flytta objekt */
+.cat-select {
+  background: transparent;
+  border: none;
+  color: #666;
+  font-size: 0.65rem;
+  padding: 2px 8px 5px 28px; /* Indrag för att matcha ikonen ovanför */
+  cursor: pointer;
+  outline: none;
+  width: fit-content;
+}
+
+.cat-select:hover {
+  color: #00ffcc;
+}
+
+/* Kategoriblocken (mapparna) */
+.category-block {
+  margin: 5px 0;
+  border-left: 1px solid rgba(0, 255, 204, 0.2);
+  margin-left: 5px;
+}
+
+.category-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 10px;
+  background: rgba(0, 255, 204, 0.05);
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: #ccc;
+  transition: background 0.2s;
+}
+
+.category-header:hover {
+  background: rgba(0, 255, 204, 0.1);
+  color: #00ffcc;
+}
+
+.category-content {
+  padding-left: 15px; /* Skapar det visuella indraget för innehållet */
+  margin-top: 5px;
+  border-left: 1px dashed rgba(255, 255, 255, 0.1);
+}
+
+/* Hantering av hopfällning */
+.category-block.collapsed .category-content {
+  display: none;
+}
+
+/* Knappen för att skapa ny kategori */
+.add-cat-btn {
+  background: transparent;
+  border: 1px dashed #444;
+  color: #888;
+  width: 100%;
+  padding: 8px;
+  font-size: 0.7rem;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.add-cat-btn:hover {
+  border-color: #00ffcc;
+  color: #00ffcc;
+  background: rgba(0, 255, 204, 0.05);
+}
+
+/* --- JUSTERING AV EXISTERANDE NAV-ITEM --- */
+
+.nav-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.nav-item.active {
+  background: rgba(0, 255, 204, 0.15);
+  color: #00ffcc;
+}
+
+.delete-small {
+  opacity: 0; /* Göm papperskorgen tills man hovrar */
+  background: transparent;
+  border: none;
+  color: #ff4444;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: opacity 0.2s;
+}
+
+.nav-item:hover .delete-small {
+  opacity: 1;
+}
+
+.sidebar-divider {
+  border: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin: 20px 0;
+}
+
+/* --- IMPORT & EXPORT SECTION --- */
+
+.sidebar-footer {
+  margin-top: auto; /* Trycker ner sektionen till botten av sidofältet */
+  padding: 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.data-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Lägger knapparna sida vid sida */
+  gap: 10px;
+}
+
+.data-btn-small {
+  display: flex;
+  flex: 1;
+  background: #1a1a1c;
+  border: 1px solid #333;
+  color: #888;
+  font-size: 0.65rem;
+  font-weight: bold;
+  padding: 10px 5px;
+  text-align: center;
+  cursor: pointer;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: all 0.2s ease;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2px;
+}
+
+/* Effekt vid hovring */
+.data-btn-small:hover {
+  background: rgba(0, 255, 204, 0.05);
+  border-color: #00ffcc;
+  color: #00ffcc;
+  box-shadow: 0 0 10px rgba(0, 255, 204, 0.1);
+}
+
+/* Gör label-elementet (för import) klickbart på samma sätt som knappen */
+label.data-btn-small {
+  margin-bottom: 0;
+  display: flex;
+}
+
+/* Döljer det fula standard-inputelementet för filer */
+.data-btn-small input[type="file"] {
+  display: none;
+}
+
+/* --- WIKI LORE LINKS --- */
+
+.lore-link {
+  color: var(--neon);
+  text-decoration: underline;
+  text-underline-offset: 3px; /* Skapar luft mellan texten och understrykningen */
+  text-decoration-thickness: 1px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.2s ease-in-out;
+  padding: 0 2px;
+  border-radius: 2px;
+}
+
+/* Effekt när man håller musen över en länk */
+.lore-link:hover {
+  background: rgba(0, 255, 204, 0.15); /* Subtil neon-bakgrund */
+  text-shadow: 0 0 8px rgba(0, 255, 204, 0.6); /* Glöd-effekt på texten */
+  text-decoration-thickness: 2px;
+}
+
+/* För texten runt omkring länkarna i Lore-vyn */
+.lore-text {
+  line-height: 1.7;         /* Gör texten mer lättläst */
+  white-space: pre-wrap;    /* Bevarar dina radbrytningar från editorn */
+  font-size: 1.05rem;
+  color: #d1d1d1;
+  letter-spacing: 0.3px;
+}
+
+/* Stil för länkar som saknar ett måldokument */
+.lore-text span[style*="color: rgb(102, 102, 102)"] {
+  border-bottom: 1px dotted #444;
+  cursor: help;
+}
+
+.lore-inline-img {
+  display: block;
+  max-width: 100%;       /* Hindrar bilden från att gå utanför skärmen */
+  height: auto !important; /* VIKTIGT: Gör att höjden anpassas efter bredden */
+  margin: 1.5rem 0;      /* Ger luft över och under bilden */
+  border-radius: 4px;
+  border: 1px solid rgba(94, 194, 255, 0.2); /* Subtil blå ram som matchar temat */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.lore-inline-img:hover {
+  transform: scale(1.02); /* En liten effekt när man hovrar */
+  border-color: var(--neon);
+}
+
+/* Editorns verktygsfält */
+.edit-toolbar {
+  background: #151517;
+  padding: 8px 12px;
+  border: 1px solid #333;
+  border-bottom: none;
+  border-radius: 4px 4px 0 0;
+  display: flex;
+  gap: 15px;
+}
+
+.toolbar-btn {
+  font-size: 0.75rem;
+  font-weight: bold;
+  color: var(--neon);
+  cursor: pointer;
+  padding: 4px 8px;
+  background: rgba(0, 255, 204, 0.05);
+  border: 1px solid rgba(0, 255, 204, 0.2);
+  border-radius: 3px;
+}
+
+.toolbar-btn:hover {
+  background: rgba(0, 255, 204, 0.15);
+  border-color: var(--neon);
+}
+
+.search-marker-results {
+  margin-left: 25px;
+  border-left: 1px solid #333;
+  padding-left: 10px;
+  margin-top: 5px;
+}
+
+.search-marker-hit {
+  font-size: 0.7rem;
+  color: #888;
+  padding: 3px 0;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.search-marker-hit:hover {
+  color: var(--neon);
+}
+
+.search-container {
+  position: relative;
+  padding: 10px;
+}
+
+.clear-search {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #666;
+  cursor: pointer;
+}
+
+.hover-preview-box {
+  width: 280px;
+  background: rgba(15, 15, 15, 0.95);
+  border: 1px solid #00ffcc;
+  border-radius: 8px;
+  padding: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  color: #eee;
+}
+
+.preview-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid #333;
+  padding-bottom: 8px;
+}
+
+.preview-thumb {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid #444;
+}
+
+.preview-header h4 {
+  margin: 0;
+  color: #00ffcc;
+  font-size: 1rem;
+}
+
+.preview-text {
+  font-size: 0.85rem;
+  line-height: 1.4;
+  margin: 0;
+  opacity: 0.8;
+}
+
+.section-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.add-cat-tiny {
+  background: rgba(179, 16, 16, 0.05);
+  border: 1px solid #444;
+  color: #888;
+  font-size: 9px;
+  padding: 2px 6px;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.mini-input-group {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 10px;
+}
+
+.delete-cat-btn {
+  background: none;
+  border: none;
+  color: #555;
+  cursor: pointer;
+  font-size: 16px;
+  margin-left: auto;
+}
+
+.cat-adder-area {
+  margin-top: 10px;
+  padding: 0 5px;
+}
+
+.dashed-add-btn {
+  width: 100%;
+  background: transparent;
+  border: 1px dashed #334e5f; /* Ljusblå dashed border */
+  color: #5ec2ff;
+  padding: 8px;
+  font-size: 11px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.dashed-add-btn:hover {
+  background: rgba(94, 194, 255, 0.1);
+  border-style: solid;
+}
+
+.mini-input-group {
+  display: flex;
+  gap: 5px;
+  background: rgba(0,0,0,0.2);
+  padding: 5px;
+  border-radius: 4px;
+}
+
+.add-btn-tiny {
+  background: #5ec2ff;
+  border: none;
+  color: #000;
+  font-weight: bold;
+  padding: 0 10px;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.add-btn-tiny.cancel {
+  background: #444;
+  color: #fff;
+}
+
+/* Snyggare raderingsknapp för kategorier */
+.delete-cat-btn {
+  background: none;
+  border: none;
+  color: #ff4d4d;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s;
+  margin-left: auto;
+}
+
+.category-header:hover .delete-cat-btn {
+  opacity: 1;
+}
+
+/* --- WORLD ENGINE LOGO DESIGN --- */
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 15px;
+  background: linear-gradient(180deg, rgba(20,20,25,1) 0%, rgba(10,10,12,0) 100%);
+  border-bottom: 1px solid rgba(94, 194, 255, 0.1);
+  margin-bottom: 10px;
+}
+
+.world-engine-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Den ljusblå hexagon-ikonen */
+.engine-logo-hex {
+  width: 28px;
+  height: 28px;
+  background: transparent;
+  border: 2px solid #5ec2ff;
+  position: relative;
+  transform: rotate(45deg); /* Diamant-form */
+  box-shadow: 0 0 15px rgba(94, 194, 255, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.hex-inner {
+  width: 10px;
+  height: 10px;
+  background: #5ec2ff;
+  box-shadow: 0 0 10px #5ec2ff;
+}
+
+.world-engine-brand:hover .engine-logo-hex {
+  transform: rotate(135deg); /* Cool animation vid hover */
+  box-shadow: 0 0 25px rgba(94, 194, 255, 0.7);
+}
+
+/* Text-designen */
+.brand-text-wrapper {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.brand-main {
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  font-weight: 900;
+  font-size: 1.1rem;
+  color: #ffffff;
+  letter-spacing: 2px;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+.brand-sub {
+  font-family: 'Courier New', monospace;
+  font-size: 0.6rem;
+  color: #5ec2ff;
+  font-weight: bold;
+  letter-spacing: 1px;
+  margin-top: 4px;
+  opacity: 0.8;
+}
+
+/* Logout-knappen anpassad för designen */
+.logout-btn {
+  background: rgba(255, 77, 77, 0.1);
+  border: 1px solid rgba(255, 77, 77, 0.3);
+  color: #ff4d4d;
+  font-size: 0.7rem;
+  font-weight: bold;
+  padding: 4px 8px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.logout-btn:hover {
+  background: #ff4d4d;
+  color: white;
+  box-shadow: 0 0 10px rgba(255, 77, 77, 0.5);
+}
+
+.lore-preview-popup {
+  position: fixed; /* Använd fixed för att följa fönstret */
+  z-index: 9999;
+  pointer-events: none; /* VIKTIGT: Musen ignorerar boxen vid klick */
+  
+  background: rgba(10, 12, 18, 0.95);
+  border: 1px solid #5ec2ff;
+  border-radius: 4px;
+  width: 260px;
+  padding: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8), 0 0 10px rgba(94, 194, 255, 0.3);
+  backdrop-filter: blur(4px);
+  
+  /* Förhindra att boxen flimrar när den dyker upp */
+  transition: opacity 0.1s ease-out; 
+}
+
+/* Gör förhandsvisningen lite mer "World Engine"-aktig */
+.preview-content h4 {
+  color: #5ec2ff;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 1.5px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid rgba(94, 194, 255, 0.3);
+}
+
+.preview-snippet {
+  font-family: 'Courier New', monospace;
+  font-size: 0.75rem;
+  color: #eee;
+  line-height: 1.5;
+}
+
+/* --- WORLD ENGINE AUTH DESIGN --- */
+.auth-outer {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #050608;
+  position: relative;
+  overflow: hidden;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Bakgrundseffekter */
+.auth-background-effects {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.grid-overlay {
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(rgba(94, 194, 255, 0.1) 1px, transparent 1px);
+  background-size: 30px 30px;
+  opacity: 0.3;
+}
+
+.glow-sphere {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(94, 194, 255, 0.15) 0%, transparent 70%);
+  filter: blur(50px);
+}
+
+/* Inloggningskortet */
+.login-card {
+  width: 100%;
+  max-width: 400px;
+  padding: 40px;
+  background: rgba(15, 17, 22, 0.8);
+  border: 1px solid rgba(94, 194, 255, 0.2);
+  border-radius: 8px;
+  backdrop-filter: blur(15px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 20px rgba(94, 194, 255, 0.05);
+  z-index: 10;
+  text-align: center;
+}
+
+.auth-header h1 {
+  color: #fff;
+  letter-spacing: 4px;
+  font-size: 1.8rem;
+  margin: 15px 0 5px 0;
+  font-weight: 900;
+}
+
+.auth-subtitle {
+  color: #5ec2ff;
+  font-size: 0.7rem;
+  letter-spacing: 2px;
+  opacity: 0.8;
+  margin-bottom: 30px;
+}
+
+/* Input fält */
+.auth-body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.input-field {
+  text-align: left;
+}
+
+.input-field label {
+  display: block;
+  color: #5ec2ff;
+  font-size: 0.65rem;
+  font-weight: bold;
+  margin-bottom: 8px;
+  letter-spacing: 1px;
+}
+
+.input-field input {
+  width: 100%;
+  padding: 12px 15px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  color: #fff;
+  font-size: 0.9rem;
+  transition: all 0.3s;
+}
+
+.input-field input:focus {
+  outline: none;
+  border-color: #5ec2ff;
+  background: rgba(94, 194, 255, 0.05);
+  box-shadow: 0 0 10px rgba(94, 194, 255, 0.2);
+}
+
+/* Primär knapp */
+.auth-primary-btn {
+  margin-top: 10px;
+  padding: 14px;
+  background: #5ec2ff;
+  border: none;
+  border-radius: 4px;
+  color: #000;
+  font-weight: 900;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.auth-primary-btn:hover {
+  background: #fff;
+  box-shadow: 0 0 20px rgba(94, 194, 255, 0.6);
+  transform: translateY(-2px);
+}
+
+/* Footer */
+.auth-footer {
+  margin-top: 25px;
+}
+
+.auth-footer p {
+  color: #888;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.auth-footer p:hover {
+  color: #5ec2ff;
+}
+
+/* Större Hexagon för Login */
+.engine-logo-hex.large {
+  width: 50px;
+  height: 50px;
+  margin: 0 auto;
+  border-width: 3px;
+}
+
+.engine-logo-hex.large .hex-inner {
+  width: 18px;
+  height: 18px;
+}
+
+.marker {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 10;
+  transition: all 0.2s;
+}
+
+.marker:hover {
+  transform: translate(-50%, -50%) scale(1.2);
+  z-index: 100;
+}
+
+.marker-icon {
+  font-size: 20px;
+  filter: drop-shadow(0 0 5px rgba(0,0,0,0.5));
+}
+
+/* Portal-markör (Blå glöd) */
+.marker.type-portal .marker-icon {
+  filter: drop-shadow(0 0 8px #5ec2ff);
+  animation: portalPulse 2s infinite;
+}
+
+/* Lore-markör (Guld glöd) */
+.marker.type-lore .marker-icon {
+  filter: drop-shadow(0 0 8px #d1ad6d);
+}
+
+.marker-label {
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 10px;
+  white-space: nowrap;
+  margin-top: 4px;
+  border: 1px solid rgba(255,255,255,0.1);
+  pointer-events: none;
+}
+
+@keyframes portalPulse {
+  0% { opacity: 0.8; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.1); }
+  100% { opacity: 0.8; transform: scale(1); }
+}
+
+.nav-item-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.nested-marker-results {
+  margin-left: 20px;
+  border-left: 1px dashed rgba(94, 194, 255, 0.3);
+  padding-left: 10px;
+  margin-bottom: 8px;
+}
+
+.nested-marker-item {
+  font-size: 0.75rem;
+  color: #888;
+  padding: 4px 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.2s;
+}
+
+.nested-marker-item:hover {
+  color: #5ec2ff;
+}
+
+.marker-icon-tiny {
+  font-size: 0.7rem;
+}
+
+/* Huvudcontainer för dashboard/login */
+.auth-outer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  width: 100vw;
+  background: radial-gradient(circle at center, #1a1a2e 0%, #0a0a0a 100%);
+  padding: 40px;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+/* Dashboard-kortet (stora behållaren) */
+.campaign-selection {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 50px;
+  width: 100%;
+  max-width: 1100px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Grid för världar */
+.campaign-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 30px;
+  width: 100%;
+  margin: 40px 0;
+  justify-content: center;
+}
+
+/* Enskilda kampanjkort */
+.campaign-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  padding: 40px 20px;
+  text-align: center;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.campaign-card:hover {
+  background: rgba(0, 123, 255, 0.1);
+  border-color: #007bff;
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 123, 255, 0.2);
+}
+
+.campaign-card h3 {
+  margin-top: 15px;
+  letter-spacing: 2px;
+  color: #fff;
+}
+
+/* Speciell stil för "New World"-knappen */
+.campaign-card.add-new {
+  border: 2px dashed rgba(0, 123, 255, 0.4);
+}
+
+.campaign-card.add-new:hover {
+  border-color: #007bff;
+  background: rgba(0, 123, 255, 0.05);
+}
+
+.campaign-icon {
+  font-size: 3.5rem;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.delete-campaign-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(255, 0, 0, 0.2);
+  border: 1px solid rgba(255, 0, 0, 0.4);
+  color: white;
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  transition: 0.2s;
+}
+
+.delete-campaign-btn:hover {
+  background: rgba(255, 0, 0, 0.8);
+  border-color: red;
+}
+
+.edit-title-input {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid #007bff;
+  color: white;
+  font-size: 2rem;
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 4px;
+  width: 60%;
+}
+
+.edit-content-textarea {
+  width: 100%;
+  min-height: 400px;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid #444;
+  color: #ccc;
+  font-family: inherit;
+  font-size: 1rem;
+  line-height: 1.6;
+  padding: 20px;
+  resize: vertical;
+  border-radius: 8px;
+}
+
+.edit-content-textarea:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+.edit-btn.save {
+  background: #28a745;
+  color: white;
+  margin-left: 10px;
+}
+
+/* --- LORE CONTAINER --- */
+.lore-detail {
+  padding: 20px;
+  color: #e0e0e0;
+  line-height: 1.6;
+}
+
+/* Header-bilden (den man laddar upp via filväljaren) */
+.lore-header-img {
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* --- INBÄDDADE BILDER (från [img:...] taggen) --- */
+.lore-content img {
+  display: block;
+  max-width: 80%; /* Tar inte upp hela bredden för att se mer ut som en illustration */
+  margin: 25px auto; /* Centrerar bilden med luft runt om */
+  border-radius: 8px;
+  border: 2px solid #333;
+  transition: transform 0.3s ease;
+  cursor: zoom-in;
+}
+
+.lore-content img:hover {
+  transform: scale(1.02);
+  border-color: #007bff;
+}
+
+/* --- TEXTEN --- */
+.lore-content {
+  font-family: 'Georgia', serif; /* Ger en mer "boklik" känsla */
+  font-size: 1.1rem;
+  white-space: pre-wrap; /* Behåller radbrytningar du gör i textarea */
+}
+
+/* Specialstil för [[Links]] */
+.lore-link {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+  border-bottom: 1px dashed transparent;
+  transition: all 0.2s;
+}
+
+.lore-link:hover {
+  border-bottom: 1px dashed #007bff;
+  background: rgba(0, 123, 255, 0.1);
+}
+
+/* --- MODAL SPECIFIKT FÖR LORE --- */
+.sidebar-input.tall {
+  display: block !important;
+  width: 100% !important;
+  min-height: 300px !important;
+  height: 350px;
+  resize: vertical;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.4;
+  resize: vertical;
+}
+
+.lore-content img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto; /* Viktigt: Auto gör att proportionerna bevaras */
+  min-height: 50px; /* Förhindrar att bilden blir osynlig innan den laddats */
+  margin: 20px auto;
+  border-radius: 8px;
+}
+
+.file-input-wrapper {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px dashed rgba(255, 255, 255, 0.2);
+  margin: 15px 0;
+}
+
+.file-input-wrapper label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #aaa;
+}
