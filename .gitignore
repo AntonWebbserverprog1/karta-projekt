@@ -1,7 +1,4 @@
 node_modules/
+build/
 .env
 database.sqlite
-backend/uploads/*
-!backend/uploads/.gitkeep
-dist/
-build/
