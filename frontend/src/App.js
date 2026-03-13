@@ -3,7 +3,7 @@ import axios from 'axios';
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import './App.css';
 
-const API_BASE = "http://localhost:5000";
+const API_BASE = "";
 
 function App() {
   // --- STATES ---
@@ -44,7 +44,7 @@ function App() {
 
   // --- API ---
   const api = useMemo(() => {
-    const instance = axios.create({ baseURL: `${API_BASE}/api` });
+    const instance = axios.create({ baseURL: `/api` });
     instance.interceptors.request.use(config => {
       const t = localStorage.getItem('token');
       if (t && t !== 'true' && t !== 'null') config.headers.Authorization = `Bearer ${t}`;
@@ -112,7 +112,7 @@ const createCampaign = async () => {
     } catch(e) {}
   };
 
-  const fetchMarkers = async (id) => { const res = await api.get(`http://localhost:5000/api/maps/${id}/markers`); setMarkers(res.data); };
+  const fetchMarkers = async (id) => { const res = await api.get(`/maps/${id}/markers`); setMarkers(res.data); };
   const fetchAllMarkers = async () => { 
   try { 
     const res = await api.get(`/markers?campaignId=${currentCampaign.id}`); 
@@ -162,7 +162,7 @@ const createCampaign = async () => {
     e.preventDefault();
     const endpoint = isRegistering ? '/api/auth/register' : '/api/auth/login';
     try {
-      const res = await axios.post(`${API_BASE}${endpoint}`, { username, password });
+      const res = await axios.post(endpoint, { username, password });
       if (isRegistering) { setIsRegistering(false); alert("Konto skapat!"); }
       else { localStorage.setItem('token', res.data.token); setToken(res.data.token); }
     } catch (err) { alert("Auth error"); }
@@ -190,24 +190,18 @@ const createCampaign = async () => {
   const handleMoveItem = async (type, id, newCategoryId) => {
     const categoryId = newCategoryId === "" ? null : parseInt(newCategoryId);
     try {
-        const response = await fetch(`http://localhost:5000/api/${type}/${id}/move`, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
-            },
-            body: JSON.stringify({ categoryId })
-        });
+        // Använd din axios-instans här istället
+        const response = await api.patch(`/${type}/${id}/move`, { categoryId });
 
-        if (response.ok) {
-            if (type === 'lore') {
-                setLoreEntries(prev => prev.map(item => item.id === id ? { ...item, categoryId } : item));
-            } else {
-                setMaps(prev => prev.map(item => item.id === id ? { ...item, categoryId } : item));
-            }
+        // Axios kastar fel om status inte är 2xx, så om vi når hit gick det bra
+        if (type === 'lore') {
+            setLoreEntries(prev => prev.map(item => item.id === id ? { ...item, categoryId } : item));
+        } else {
+            setMaps(prev => prev.map(item => item.id === id ? { ...item, categoryId } : item));
         }
     } catch (err) {
         console.error("Fel vid flytt:", err);
+        alert("Kunde inte flytta objektet.");
     }
 };
 
