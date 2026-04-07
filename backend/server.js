@@ -113,7 +113,7 @@ const storage = multer.diskStorage({
     destination: uploadDir,
     filename: (req, file, cb) => cb(null, Date.now() + path.extname(file.originalname))
 });
-const upload = multer({ storage, limits: { fileSize: 50 * 1024 * 1024 } });
+const upload = multer({ storage, limits: { fileSize: 10000 * 1024 * 1024 } });
 
 // --- ROUTES: AUTH ---
 app.post('/api/auth/register', async (req, res) => {
