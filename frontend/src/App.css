@@ -120,22 +120,19 @@ body {
 .sidebar-search {
   width: calc(100% - 20px);
   margin: 10px;
-  padding: 10px 15px;
-  background: rgba(20, 20, 20, 0.7); /* Mörk och lyxig */
-  border: 1px solid rgba(255, 215, 0, 0.3); /* Guldaktig border */
+  padding: 10px 15px 10px 35px !important;
+  background: rgba(0, 0, 0, 0.4) !important; 
+  border: 1px solid rgba(0, 242, 255, 0.2) !important; /* Din accent-färg */
   border-radius: 6px;
-  color: #eee;
-  font-size: 0.9rem;
+  color: #fff;
   outline: none;
   transition: all 0.2s ease;
-  box-sizing: border-box;
 }
 
 /* När man klickar i rutan (Focus) */
 .sidebar-search:focus {
-  border-color: #ffd700;
-  background: rgba(30, 30, 30, 0.9);
-  box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 10px rgba(0, 242, 255, 0.3);
 }
 
 /* Styling för "Sök..."-texten */
@@ -152,9 +149,11 @@ body {
 
 .search-icon-inside {
   position: absolute;
-  left: 20px;
-  color: #666;
-  pointer-events: none;
+  left: 25px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--accent); /* Blå ikon */
+  opacity: 0.6;
 }
 
 /* Justera padding på inputen så texten inte krockar med ikonen */
@@ -165,13 +164,11 @@ body {
 
 .clear-search-btn {
   position: absolute;
-  right: 20px;
-  background: none;
-  border: none;
-  color: #888;
-  font-size: 1.2rem;
-  cursor: pointer;
-  padding: 5px;
+  right: 25px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--accent); /* Blått kryss */
+  opacity: 0.5;
 }
 
 .clear-search-btn:hover {
