@@ -116,6 +116,68 @@ body {
   background: rgba(0, 242, 255, 0.1);
 }
 
+/* Denna matchar inputen i din sidofält */
+.sidebar-search {
+  width: calc(100% - 20px);
+  margin: 10px;
+  padding: 10px 15px;
+  background: rgba(20, 20, 20, 0.7); /* Mörk och lyxig */
+  border: 1px solid rgba(255, 215, 0, 0.3); /* Guldaktig border */
+  border-radius: 6px;
+  color: #eee;
+  font-size: 0.9rem;
+  outline: none;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+/* När man klickar i rutan (Focus) */
+.sidebar-search:focus {
+  border-color: #ffd700;
+  background: rgba(30, 30, 30, 0.9);
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+}
+
+/* Styling för "Sök..."-texten */
+.sidebar-search::placeholder {
+  color: #666;
+  font-style: italic;
+}
+
+.search-container-main {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-icon-inside {
+  position: absolute;
+  left: 20px;
+  color: #666;
+  pointer-events: none;
+}
+
+/* Justera padding på inputen så texten inte krockar med ikonen */
+.sidebar-search {
+  padding-left: 35px !important;
+  padding-right: 35px !important;
+}
+
+.clear-search-btn {
+  position: absolute;
+  right: 20px;
+  background: none;
+  border: none;
+  color: #888;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.clear-search-btn:hover {
+  color: #fff;
+}
+
 /* --- CATEGORIES & NAVIGATION --- */
 .sidebar-section {
   margin-top: 20px;
