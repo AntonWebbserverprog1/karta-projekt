@@ -118,8 +118,9 @@ body {
 
 /* Denna matchar inputen i din sidofält */
 .sidebar-search {
-  width: calc(100% - 20px);
-  margin: 10px;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  margin: 10px 0 !important;
   padding: 10px 15px 10px 35px !important;
   background: rgba(0, 0, 0, 0.4) !important; 
   border: 1px solid rgba(0, 242, 255, 0.2) !important; /* Din accent-färg */
